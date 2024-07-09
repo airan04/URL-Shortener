@@ -1,13 +1,14 @@
-import UrlSchema from "./urlModal";
-import connectDb from "./database";
+import UrlSchema from "./urlModal.js";
+import connectDb from "./database.js";
 
-const express=require('express');
-const shortid = require('shortid');
+import express from 'express';
+import shortid from 'shortid';
 
 const app=express();
-
+app.use(express.json());
+connectDb();
 app.post('/shorten',async(req,res)=>{
-    const { originalUrl }= req.body;
+    const {originalUrl}= req.body;
     const shortUrl = shortid.generate();
     const url = new UrlSchema({ originalUrl, shortUrl });
     await url.save();
@@ -21,7 +22,7 @@ app.get('/:shortUrl',async(req,res)=>{
     if(url){
         res.redirect(url.originalUrl);
     }else{
-        res.statusCode(500).json({error:'Url not found'});
+        res.json({error:'Url not found'});
     }
 })
 

@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const urlSchema = new mongoose.Schema({
-    url:{type: String},
+    originalUrl:{type: String},
     shortUrl:{type:String},
 })
 
